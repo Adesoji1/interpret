@@ -88,7 +88,7 @@ compile_all="$compile_all \"$src_path/TensorTotalsBuild.cpp\""
 compile_all="$compile_all -I\"$src_path\""
 compile_all="$compile_all -I\"$src_path/inc\""
 compile_all="$compile_all -Wall -Wextra -Wno-parentheses -Wold-style-cast -Wdouble-promotion -Wshadow -Wformat=2 -std=c++11"
-compile_all="$compile_all -fvisibility=hidden -fvisibility-inlines-hidden -ffast-math -fno-finite-math-only -march=core2 -DEBM_NATIVE_EXPORTS -fpic"
+compile_all="$compile_all -fvisibility=hidden -fvisibility-inlines-hidden -fno-math-errno -fno-trapping-math -march=core2 -DEBM_NATIVE_EXPORTS -fpic"
 
 if [ "$os_type" = "Darwin" ]; then
    # reference on rpath & install_name: https://www.mikeash.com/pyblog/friday-qa-2009-11-06-linking-and-install-names.html
@@ -287,7 +287,7 @@ elif [ "$os_type" = "Linux" ]; then
       bin_path="$root_path/tmp/gcc/bin/release/linux/x86/ebm_native"
       bin_file="lib_ebm_native_linux_x86.so"
       log_file="$intermediate_path/ebm_native_release_linux_x86_build_log.txt"
-      compile_command="$g_pp_bin $compile_linux -m32 -DNDEBUG -O3 -o \"$bin_path/$bin_file\" 2>&1"
+      compile_command="$g_pp_bin $compile_linux -msse2 -mfpmath=sse -m32 -DNDEBUG -O3 -o \"$bin_path/$bin_file\" 2>&1"
       
       if [ ! -d "$intermediate_path" ]; then
          printf "%s\n" "Doing first time installation of x86"
